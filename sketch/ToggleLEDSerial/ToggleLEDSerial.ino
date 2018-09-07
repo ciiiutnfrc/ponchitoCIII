@@ -27,7 +27,7 @@ void setup() {
 // La función 'loop' corre indefinidamente una y otra vez.
 void loop() {
   size_t n;
-  uint8_t letra[1];
+  char letra[1];
 
   // Lee la letra (1 byte) por puerto serie.
   n = Serial.readBytes(letra, 1);

@@ -1,0 +1,100 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{graphicx,psfrag}
+\usepackage{amsfonts,amssymb,amsthm,amsmath}
+\usepackage{fullpage}
+
+\usepackage[hidelinks,breaklinks]{hyperref}
+\hypersetup{
+  citecolor=blue,
+  citebordercolor={1 1 1},
+  linkbordercolor={0 1 0},
+  pdfborder={0 0 0.5 [3 3]},
+  colorlinks=true
+}
+
+\usepackage{listingsutf8}
+%\usepackage{listings}          % for creating language style
+%VER https://github.com/trihedral/AdruinoLatexListing
+\input{arduinoLanguage.tex}    % adds the arduino language
+
+\lstset{
+  literate=%
+  {á}{{\'a}}1
+  {é}{{\'e}}1
+  {í}{{\'i}}1
+  {ó}{{\'o}}1
+  {ú}{{\'u}}1
+}
+
+%% Define an Arduino style fore use later %%
+\lstdefinestyle{myArduino}{%
+  language=Arduino,
+  basicstyle=\footnotesize\ttfamily,  % the size of the fonts that are used for the code
+  frame=tb,                           % add a frame around the code (none|leftline|topline|bottomline|lines|single|shadowbox)
+  numberstyle=\tiny,                  % the style that is used for the line-numbers
+  xleftmargin=.10\textwidth, xrightmargin=.10\textwidth,
+  %% Add other words needing highlighting below %%
+  morekeywords=[1]{},                  % dark green
+  morekeywords=[2]{FILE_WRITE},        % light blue
+  morekeywords=[3]{SD, File},          % bold orange
+  morekeywords=[4]{open, exists},      % orange
+  %% The lines below add a nifty box around the code %%
+  rulesepcolor=\color{arduinoBlue},
+}
+
+\renewcommand\lstlistingname{Listado}
+\renewcommand\lstlistlistingname{Listado}
+
+\title{Sketchs de ejemplo para el ponchitoCIII}
+\author{Gonzalo F. Perez Paina (CIII-UTN-FRC)}
+\date{\today}
+
+\begin{document}
+\maketitle
+%\tableofcontents
+
+\section{Introducción}
+El \textit{ponchitoCIII} es una placa de expansión para Arduino o Intel Galileo que cuenta con: LEDs conectados a las salidas digitales, pulsadores conectado a entradas digitales, y un potenciometro conectado a la entrada del conversor analógico a digital.
+
+Aquí se muestran algunos \texttt{skecth} de Arduino y su explicación para ser utilizado con el ponchitoCIII.
+
+Este documento, junto a otro con detalles sobre el ponchitoCIII, y algunos sketchs Arduino de ejemplos para evaluar la placa se encuentran disponibles en \href{https://github.com/ciiiutnfrc/ponchitoCIII}{https://github.com/ciiiutnfrc/ponchitoCIII}.
+
+
+\section{Sketchs ejempos del IDE Arduino}
+\begin{description}
+  \item[Encendido y apagado de un LED.]\hfill \\En \texttt{File->Examples->01.Basics->Blink} se muestra un sketch de ejemplo que permite encender y apagar de forma continuada el LED incluido (build-in) en la placa Arduino, el cual está conectado al pin de entrada/salida digital nro. 13. Modificando este pin se puede hacer que encieda y apague un LED del ponchitoCIII. Para esto es necesario cambiar el valor de la constante simbólica \texttt{LED\_BUILDIN} por el valor del nuevo pin (5, 6, o 9).
+  \item[Cambio de intensidad de un LED.]\hfill \\En \texttt{File->Examples->01.Basics->Fade} se muestra un sketch que permite modificar el nivel de intensidad de la luz de un LED conectado al pin 9, que en el caso del ponchitoCIII se corresponde al de color rojo. El pin 9 entre otros puede actuar como salida de PWM (Pulse Width Modulation) y variar el ancho del pulso mediante la función \texttt{analogWrite()} lo cual modifica el nivel de intensidad el LED. Dichos pines están indicados en la placa con el símbolo ``$\sim$'' al lado del número de pin (tal como $\sim\!9$). Modificando el valor de la variable \texttt{led} se puede cambiar la intensidad de otro LED del ponchitoCIII.
+  \item[Lectura de valor analógico y envío por puerto serie.]\hfill \\En \texttt{File->Examples->01.Basics->AnalogReadSerial} se muestra un sketch de ejemplo en el cual se lee el valor de tensión presente en la entrada analógica \texttt{A0}, y se muestra su valor en la terminal serial del IDE Arduino. La terminal serial se abre desde \texttt{Tool->Serial Monitor}. El valor leído toma valores entre 0 y $2^{10}-1=1023$, para el valor de tensión de entrada entre 0V y 5V. El sketch \texttt{File->Examples->01.Basics->ReadAnalogVoltage} muestra el valor directamente en voltios entre 0.00 y 5.00.
+\end{description}
+
+\section{Sketch del ponchitoCIII}
+
+\subsection{Salidas digitales -- LEDs}
+\lstinputlisting[style=myArduino,caption={Enciende y apaga todos los LEDs.},label={lst:blinkall},float=h!]{../sketch/BlinkAll/BlinkAll.ino}
+
+\lstinputlisting[style=myArduino,caption={Conmuta el estado de los LEDs a través del puerto serie.},label={lst:toggleledser},float=h!]{../sketch/ToggleLEDSerial/ToggleLEDSerial.ino}
+
+\subsection{Entradas digitales -- pulsadores}
+\lstinputlisting[style=myArduino,caption={Muestra por el monitor serie el estado de los pulsadores en binario.},label={lst:buttonstatebin},float=h!]{../sketch/ButtonStateSerialBin/ButtonStateSerialBin.ino}
+
+\lstinputlisting[style=myArduino,caption={Muestra por el monitor serie el estado de los pulsadores en texto.},label={lst:buttonstatemsg},float=h!]{../sketch/ButtonStateSerialMsg/ButtonStateSerialMsg.ino}
+
+\subsection{Entrada analógica -- Conversor analógico a digital}
+\lstinputlisting[style=myArduino,caption={ADCFull.},label={lst:adcfull1},float=h!,lastline=58]{../sketch/ADCFull/ADCFull.ino}
+\lstinputlisting[style=myArduino,caption={ADCFull (cont.).},label={lst:adcfull2},float=h!,firstline=59,firstnumber=59]{../sketch/ADCFull/ADCFull.ino}
+
+\begin{thebibliography}{9}
+  \bibitem{IDEArduino} IDE Arduino. \href{https://www.arduino.cc/en/Main/Software}{https://www.arduino.cc/en/Main/Software}
+\end{thebibliography}
+
+\vfill
+\begin{flushright}
+  \LaTeX~/~Creado en abril de 2018
+\end{flushright}
+
+\end{document}
+
