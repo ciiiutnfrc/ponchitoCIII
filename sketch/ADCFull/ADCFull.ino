@@ -66,14 +66,12 @@ void loop() {
         break;
     }
   }
-  
   delay(100);
 }
 
 void entero_a_cadena(unsigned int entero, unsigned char cant_digitos, char * cadena)
 {
   unsigned int n, res;
-  
   for(n = 0; n < cant_digitos; n++)
   {
     res = (entero / potencia_entero(10, cant_digitos-n-1));
@@ -87,11 +85,8 @@ int potencia_entero(int x, int n)
 {
   if(n == 0)
     return 1;
- 
   int r = 1;
   while(n--)
     r *= x;
- 
   return r;  
 }
-

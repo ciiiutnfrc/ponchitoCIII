@@ -9,9 +9,9 @@
  * El código de este ejemplo es de dominio público.
  */
 
-#define GPIO_LED_VERDE    5
-#define GPIO_LED_AMARILLO 6
-#define GPIO_LED_ROJO     9
+#define PIN_LED_VERDE    5
+#define PIN_LED_AMARILLO 6
+#define PIN_LED_ROJO     9
 
  // La función 'setup' se ejecuta una única vez al presionar reset o encender la placa.
 void setup() {
@@ -19,9 +19,9 @@ void setup() {
   Serial.begin(9600); 
  
   // inicialización de los pines GPIO como salida para los LEDs.
-  pinMode(GPIO_LED_VERDE, OUTPUT);
-  pinMode(GPIO_LED_AMARILLO, OUTPUT);
-  pinMode(GPIO_LED_ROJO, OUTPUT);
+  pinMode(PIN_LED_VERDE, OUTPUT);
+  pinMode(PIN_LED_AMARILLO, OUTPUT);
+  pinMode(PIN_LED_ROJO, OUTPUT);
 }
 
 // La función 'loop' corre indefinidamente una y otra vez.
@@ -36,13 +36,13 @@ void loop() {
     switch(letra[0])
     {
       case 'v':
-        toggle(GPIO_LED_VERDE);
+        toggle(PIN_LED_VERDE);
         break;
       case 'a':
-        toggle(GPIO_LED_AMARILLO);
+        toggle(PIN_LED_AMARILLO);
         break;
       case 'r':
-        toggle(GPIO_LED_ROJO);
+        toggle(PIN_LED_ROJO);
         break;
     }
   }
@@ -56,4 +56,3 @@ void toggle(uint8_t gpio)
   else
     digitalWrite(gpio, HIGH);
 }
-

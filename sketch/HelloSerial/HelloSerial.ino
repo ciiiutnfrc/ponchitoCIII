@@ -20,4 +20,3 @@ void loop() {
   Serial.println(MENSAJE);
   delay(1000);
 }
-
